@@ -8,6 +8,9 @@ import {
   errorResponserHandler,
   invalidPathHandler,
 } from "./middleware/errorHandler";
+import userRoutes from "./routes/userRoutes";
+import postRoutes from "./routes/postRoutes";
+import commentRoutes from "./routes/commentRoutes";
 
 const app = express();
 dotenv.config();
@@ -17,8 +20,13 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 
-// connnect database
+// connect database
 connectDB();
+
+//router
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 // static assets
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
