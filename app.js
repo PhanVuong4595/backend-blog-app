@@ -3,6 +3,10 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
+import {
+  errorResponserHandler,
+  invalidPathHandler,
+} from "./middleware/errorHandler";
 
 const app = express();
 dotenv.config();
@@ -14,6 +18,12 @@ app.use(express.json());
 
 // connnect database
 connectDB();
+
+// static assets
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+app.use(invalidPathHandler);
+app.use(errorResponserHandler);
 
 // connection
 const PORT = 8000;
